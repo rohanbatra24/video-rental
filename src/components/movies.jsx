@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import MoviesTable from './moviesTable';
 
-import Like from './common/like';
 import Pagination from './common/pagination';
 import Filter from './common/filter';
 
@@ -70,44 +70,7 @@ export default function Movies() {
 			</div>
 			<div className="col">
 				<h1>Showing {filtered.length} movies in the database</h1>
-
-				<table className="table">
-					<thead>
-						<tr>
-							<th scope="col">Title</th>
-							<th scope="col">Genre</th>
-							<th scope="col">Stock</th>
-							<th scope="col">Rate</th>
-							<th scope="col" />
-							<th scope="col" />
-						</tr>
-					</thead>
-					<tbody>
-						{moviesPaginated.map((movie) => {
-							return (
-								<tr key={movie._id}>
-									<th scope="row">{movie.title}</th>
-									<td>{movie.genre.name}</td>
-									<td>{movie.numberInStock}</td>
-									<td>@{movie.dailyRentalRate}</td>
-									<td>
-										<Like liked={movie.liked} onLike={onLike} movie={movie} />
-									</td>
-
-									<td>
-										<button
-											onClick={() => onDelete(movie._id)}
-											key={movie._id}
-											className="btn btn-danger btn-sm"
-										>
-											Delete
-										</button>
-									</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
+				<MoviesTable movies={moviesPaginated} onDelete={onDelete} onLike={onLike} />
 				<Pagination
 					itemsCount={filtered.length}
 					pageSize={pageSize.pageSize}
