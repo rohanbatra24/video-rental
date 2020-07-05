@@ -15,6 +15,7 @@ export default function Movies() {
 	const [ currPage, setCurrPage ] = useState(1);
 	const [ genres, setGenres ] = useState([]);
 	const [ selectedGenre, setSelectedGenre ] = useState('');
+	const [ sortColumn, setSortColumn ] = useState({ column: 'title', order: 'asc' });
 
 	useEffect(() => {
 		const genres = [ { name: 'All Genres' }, ...getGenres() ];
@@ -22,6 +23,27 @@ export default function Movies() {
 		setGenres(genres);
 		setMovies({ movieList: getMovies() });
 	}, []);
+
+	const handleSort = (column) => {
+		setSortColumn({ column, order: 'asc' });
+
+		function compare(a, b) {
+			console.log('a[column]', a[column]);
+			console.log('column', column);
+
+			if (a[column] < b[column]) {
+				return -1;
+			}
+			if (a[column] > b[column]) {
+				return 1;
+			}
+			return 0;
+		}
+
+		console.log(movies.movieList.sort(compare));
+
+		setMovies({ movieList: movies.movieList.sort(compare) });
+	};
 
 	const handleFilter = (genre) => {
 		setCurrPage(1);
@@ -70,7 +92,7 @@ export default function Movies() {
 			</div>
 			<div className="col">
 				<h1>Showing {filtered.length} movies in the database</h1>
-				<MoviesTable movies={moviesPaginated} onDelete={onDelete} onLike={onLike} />
+				<MoviesTable movies={moviesPaginated} onDelete={onDelete} onLike={onLike} onSort={handleSort} />
 				<Pagination
 					itemsCount={filtered.length}
 					pageSize={pageSize.pageSize}
