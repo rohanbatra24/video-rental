@@ -3,6 +3,7 @@ import MoviesTable from './moviesTable';
 
 import Pagination from './common/pagination';
 import Filter from './common/filter';
+import _ from 'lodash';
 
 import { paginate } from '../utils/paginate';
 
@@ -26,23 +27,6 @@ export default function Movies() {
 
 	const handleSort = (column) => {
 		setSortColumn({ column, order: 'asc' });
-
-		function compare(a, b) {
-			console.log('a[column]', a[column]);
-			console.log('column', column);
-
-			if (a[column] < b[column]) {
-				return -1;
-			}
-			if (a[column] > b[column]) {
-				return 1;
-			}
-			return 0;
-		}
-
-		console.log(movies.movieList.sort(compare));
-
-		setMovies({ movieList: movies.movieList.sort(compare) });
 	};
 
 	const handleFilter = (genre) => {
@@ -83,7 +67,9 @@ export default function Movies() {
 			? movies.movieList.filter((movie) => movie.genre.name === selectedGenre.name)
 			: movies.movieList;
 
-	const moviesPaginated = paginate(filtered, pageSize.pageSize, currPage);
+	const sorted = _.orderBy(filtered, [ sortColumn.column ], [ sortColumn.order ]);
+
+	const moviesPaginated = paginate(sorted, pageSize.pageSize, currPage);
 
 	return (
 		<div className="row">
