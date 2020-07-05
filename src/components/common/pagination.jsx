@@ -1,5 +1,7 @@
 import React from 'react';
 
+import propTypes from 'prop-types';
+
 export default function Pagination(props) {
 	const renderPagination = () => {
 		const arr = [];
@@ -14,7 +16,7 @@ export default function Pagination(props) {
 			const classNames = props.currPage === index ? 'page-item active' : 'page-item';
 			arr.push(
 				<li key={index} className={classNames}>
-					<a className="page-link" onClick={() => props.onPageChange(index)}>
+					<a className="page-link" onClick={() => props.onPageChange(index)} href="#">
 						{index}
 					</a>
 				</li>
@@ -30,3 +32,10 @@ export default function Pagination(props) {
 		</nav>
 	);
 }
+
+Pagination.propTypes = {
+	itemsCount   : propTypes.number.isRequired,
+	pageSize     : propTypes.number.isRequired,
+	currPage     : propTypes.number.isRequired,
+	onPageChange : propTypes.func.isRequired
+};
