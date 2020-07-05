@@ -6,7 +6,7 @@ export default function Filter({ onFilterClick, items, textProperty, valueProper
 			<li
 				type="button"
 				className={item.name === selectedItem ? 'list-group-item active' : 'list-group-item'}
-				key={item[valueProperty]}
+				key={item[textProperty]}
 				onClick={() => onFilterClick(item)}
 			>
 				{item[textProperty]}
