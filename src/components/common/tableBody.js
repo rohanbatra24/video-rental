@@ -1,26 +1,22 @@
 import React from 'react';
 import Like from './like';
 
-export default function TableHeader({ movies, onLike, onDelete }) {
+export default function TableHeader({ data, onLike, onDelete }) {
 	return (
 		<tbody>
-			{movies.map((movie) => {
+			{data.map((item) => {
 				return (
-					<tr key={movie._id}>
-						<th scope="row">{movie.title}</th>
-						<td>{movie.genre.name}</td>
-						<td>{movie.numberInStock}</td>
-						<td>{movie.dailyRentalRate}</td>
+					<tr key={item._id}>
+						<th scope="row">{item.title}</th>
+						<td>{item.genre.name}</td>
+						<td>{item.numberInStock}</td>
+						<td>{item.dailyRentalRate}</td>
 						<td>
-							<Like liked={movie.liked} onLike={onLike} movie={movie} />
+							<Like liked={item.liked} onLike={onLike} item={item} />
 						</td>
 
 						<td>
-							<button
-								onClick={() => onDelete(movie._id)}
-								key={movie._id}
-								className="btn btn-danger btn-sm"
-							>
+							<button onClick={() => onDelete(item._id)} key={item._id} className="btn btn-danger btn-sm">
 								Delete
 							</button>
 						</td>
