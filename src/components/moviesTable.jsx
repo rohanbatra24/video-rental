@@ -1,21 +1,30 @@
 import React from 'react';
 import Like from './common/like';
 
-export default function MoviesTable({ movies, onLike, onDelete, onSort }) {
+export default function MoviesTable({ movies, sortColumn, onLike, onDelete, onSort, handleSort }) {
+	const raiseSort = (column) => {
+		if (column === sortColumn.column && sortColumn.order === 'asc') {
+			handleSort({ column, order: 'desc' });
+		}
+		else {
+			handleSort({ column, order: 'asc' });
+		}
+	};
+
 	return (
 		<table className="table">
 			<thead>
 				<tr>
-					<th onClick={() => onSort('title')} scope="col">
+					<th onClick={() => raiseSort('title')} scope="col">
 						Title
 					</th>
-					<th onClick={() => onSort('genre.name')} scope="col">
+					<th onClick={() => raiseSort('genre.name')} scope="col">
 						Genre
 					</th>
-					<th onClick={() => onSort('numberInStock')} scope="col">
+					<th onClick={() => raiseSort('numberInStock')} scope="col">
 						Stock
 					</th>
-					<th onClick={() => onSort('dailyRentalRate')} scope="col">
+					<th onClick={() => raiseSort('dailyRentalRate')} scope="col">
 						Rate
 					</th>
 					<th scope="col" />
