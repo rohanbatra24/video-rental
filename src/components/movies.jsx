@@ -24,6 +24,19 @@ export default function Movies() {
 		setMovies({ movieList: getMovies() });
 	}, []);
 
+	const getPageData = (params) => {
+		const filtered =
+			selectedGenre && selectedGenre._id
+				? movies.movieList.filter((movie) => movie.genre.name === selectedGenre.name)
+				: movies.movieList;
+
+		const sorted = _.orderBy(filtered, [ sortColumn.column ], [ sortColumn.order ]);
+
+		const moviesPaginated = paginate(sorted, pageSize.pageSize, currPage);
+
+		return { data: moviesPaginated, totalCount: filtered.length };
+	};
+
 	const handleSort = (columnObj) => {
 		setSortColumn(columnObj);
 	};
@@ -61,24 +74,15 @@ export default function Movies() {
 		return <p>There are no movies in the database.</p>;
 	}
 
-	const filtered =
-		selectedGenre && selectedGenre._id
-			? movies.movieList.filter((movie) => movie.genre.name === selectedGenre.name)
-			: movies.movieList;
-
-	const sorted = _.orderBy(filtered, [ sortColumn.column ], [ sortColumn.order ]);
-
-	const moviesPaginated = paginate(sorted, pageSize.pageSize, currPage);
-
 	return (
 		<div className="row">
 			<div className="col-3">
 				<Filter onFilterClick={handleFilter} items={genres} selectedItem={selectedGenre} />
 			</div>
 			<div className="col">
-				<h1>Showing {filtered.length} movies in the database</h1>
+				<h1>Showing {getPageData().data.length} movies in the database</h1>
 				<MoviesTable
-					movies={moviesPaginated}
+					movies={getPageData().data}
 					onDelete={onDelete}
 					onLike={onLike}
 					onSort={handleSort}
@@ -86,7 +90,7 @@ export default function Movies() {
 					sortColumn={sortColumn}
 				/>
 				<Pagination
-					itemsCount={filtered.length}
+					itemsCount={getPageData().totalCount}
 					pageSize={pageSize.pageSize}
 					onPageChange={handlePageChange}
 					currPage={currPage}
