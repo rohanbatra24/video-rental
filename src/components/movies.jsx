@@ -12,21 +12,20 @@ import { getGenres } from '../services/fakeGenreService';
 
 export default function Movies() {
 	const [ movies, setMovies ] = useState([]);
+	const [ genres, setGenres ] = useState([]);
 	const [ pageSize, setPageSize ] = useState({ pageSize: 4 });
 	const [ currPage, setCurrPage ] = useState(1);
-	const [ genres, setGenres ] = useState([]);
 	const [ selectedGenre, setSelectedGenre ] = useState('');
 	const [ sortColumn, setSortColumn ] = useState({ column: 'title', order: 'asc' });
 
 	useEffect(() => {
 		const genres = [ { name: 'All Genres' }, ...getGenres() ];
-
 		setGenres(genres);
 		setMovies({ movieList: getMovies() });
 	}, []);
 
-	const handleSort = (column) => {
-		setSortColumn({ column, order: 'asc' });
+	const handleSort = (columnObj) => {
+		setSortColumn(columnObj);
 	};
 
 	const handleFilter = (genre) => {
@@ -78,7 +77,14 @@ export default function Movies() {
 			</div>
 			<div className="col">
 				<h1>Showing {filtered.length} movies in the database</h1>
-				<MoviesTable movies={moviesPaginated} onDelete={onDelete} onLike={onLike} onSort={handleSort} />
+				<MoviesTable
+					movies={moviesPaginated}
+					onDelete={onDelete}
+					onLike={onLike}
+					onSort={handleSort}
+					handleSort={handleSort}
+					sortColumn={sortColumn}
+				/>
 				<Pagination
 					itemsCount={filtered.length}
 					pageSize={pageSize.pageSize}
