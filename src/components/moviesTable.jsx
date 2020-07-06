@@ -16,7 +16,7 @@ export default function MoviesTable({ movies, sortColumn, onLike, onDelete, hand
 	return (
 		<table className="table">
 			<TableHeader handleSort={handleSort} columns={columns} sortColumn={sortColumn} />
-			<TableBody movies={movies} onLike={onLike} onDelete={onDelete} />
+			<TableBody data={movies} onLike={onLike} onDelete={onDelete} />
 		</table>
 	);
 }
