@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 
 export default function NavBar() {
 	return (
-		<nav class="navbar navbar-expand-lg navbar-light bg-light m-4">
+		<nav className="navbar navbar-expand-lg navbar-light bg-light m-4">
 			<Link className="navbar-brand" to="/">
 				Vidly
 			</Link>
@@ -28,6 +28,9 @@ export default function NavBar() {
 					</NavLink>
 					<NavLink className="nav-item nav-link" to="/rentals">
 						Rentals
+					</NavLink>
+					<NavLink className="nav-item nav-link" to="/login">
+						Login
 					</NavLink>
 				</div>
 			</div>
