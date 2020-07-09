@@ -26,7 +26,7 @@ export default function LoginForm() {
 
 		console.log('errors', errors);
 
-		setErrors(errors);
+		setErrors(errors || {});
 
 		if (errors) return;
 
