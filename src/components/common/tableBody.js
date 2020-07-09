@@ -1,5 +1,6 @@
 import React from 'react';
 import Like from './like';
+import { Link } from 'react-router-dom';
 
 export default function TableHeader({ data, onLike, onDelete }) {
 	return (
@@ -7,7 +8,9 @@ export default function TableHeader({ data, onLike, onDelete }) {
 			{data.map((item) => {
 				return (
 					<tr key={item._id}>
-						<th scope="row">{item.title}</th>
+						<th scope="row">
+							<Link to={`/movies/${item._id}`}>{item.title}</Link>
+						</th>
 						<td>{item.genre.name}</td>
 						<td>{item.numberInStock}</td>
 						<td>{item.dailyRentalRate}</td>
