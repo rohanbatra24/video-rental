@@ -8,9 +8,9 @@ export default function Input(props) {
 				value={props.value}
 				name={props.name}
 				id={props.name}
-				type="text"
 				className="form-control"
 				onChange={props.onChange}
+				type={props.type}
 			/>
 			{props.errors && <div className="alert alert-danger">{props.errors}</div>}
 		</div>
