@@ -9,6 +9,7 @@ import { paginate } from '../utils/paginate';
 
 import { getMovies } from '../services/fakeMovieService';
 import { getGenres } from '../services/fakeGenreService';
+import { Link } from 'react-router-dom';
 
 export default function Movies() {
 	const [ movies, setMovies ] = useState([]);
@@ -80,6 +81,10 @@ export default function Movies() {
 				<Filter onFilterClick={handleFilter} items={genres} selectedItem={selectedGenre} />
 			</div>
 			<div className="col">
+				<Link className="btn btn-primary m-3" to="/movies/new">
+					New Movie
+				</Link>
+
 				<h1>Showing {getPageData().data.length} movies in the database</h1>
 				<MoviesTable
 					movies={getPageData().data}
